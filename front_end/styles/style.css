@@ -1,0 +1,7 @@
+.gameOver {
+	font-family: monospace;
+	background-color: #FF0000;
+	color: #FFFFFF;
+	font-size: 30pt;
+    padding: 10px;
+}
