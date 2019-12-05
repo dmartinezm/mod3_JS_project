@@ -117,8 +117,11 @@ function saveScore(){
 function scoreRecorded(){
     const name = input.value()
     adaptor.postScore(name, current_score)
-   .then(scoreArr => {
-        scoresUl.innerHTML = ''
+    .then(scoreArr => {
+        scoreListDiv.innerHTML = ""
+        highScoresH2 = document.createElement("h2")
+        highScoresH2.innerText= "High Scores"
+        scoreListDiv.append(highScoresH2)
         scoreArr.forEach(scoreObj => {
            let scoreLi = document.createElement("li")
            scoreLi.className = "scoreLi"
@@ -131,21 +134,21 @@ function scoreRecorded(){
     
 }
 
-function scoreList(){
+// function scoreList(){
 
-    adaptor.getScores()
-    .then(scoreArr => {
-        scoreArr.forEach(scoreObj => {
-           let scoreLi = document.createElement("li")
-           scoreLi.className = "scoreLi"
-           scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
-           scoresUl.append(scoreLi)
-           scoreListDiv.append(scoresUl)
+//     adaptor.getScores()
+//     .then(scoreArr => {
+//         scoreArr.forEach(scoreObj => {
+//            let scoreLi = document.createElement("li")
+//            scoreLi.className = "scoreLi"
+//            scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
+//            scoresUl.append(scoreLi)
+//            scoreListDiv.append(scoresUl)
             
-        });
-    })
+//         });
+//     })
 
-}
+// }
 
 function pressedStart(){
     start_button.remove();
