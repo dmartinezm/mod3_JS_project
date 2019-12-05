@@ -3,7 +3,7 @@ class Character {
     constructor(){
         this.charcter_image = loadImage("images/bird.png")
         this.x = 64;
-        this.y = height/3;
+        this.y = 0;
         this.w = 32;
         this.h = 32;
         this.velocity = 0;

@@ -11,30 +11,35 @@ let save_button;
 let end_button;
 let restart_button;
 let current_score = 0;
-let timer = 5;
+let myCanvas;
+let fontRegular;
 let song = new Audio("sounds/sonic.mp3")
+let ding = new Audio("sounds/ding2.wav")
 song.loop= true
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
-    getAllLanguages()
-    scoreList()
+
+    fontRegular = loadFont('fonts/Regular.ttf');
+  
+    getAllLanguages();
+    scoreList();
 }
 
 function setup(){
-    var myCanvas = createCanvas(700,530);
+    myCanvas = createCanvas(700,530);
     myCanvas.parent('canvasDiv')
     character = new Character;
-    textSize(20)
+    textSize(20);
     noLoop();
     startGame();
     
 }
 
 function draw(){
-    
     background(background_img);
-    text("Press Enter to Pause", 500, 500)
+    text("Press Enter to Pause", 500, 500);
+   
     drawScore();
     frames();
     drawGems();
@@ -50,7 +55,7 @@ function drawGems(){
         language.update();
 
         if(language.hits(character)){
-            console.log('hit')
+            // console.log('hit')
             gems.splice(0,1);
         }
         if(language.offscreen()){
@@ -68,56 +73,49 @@ function frames(){
 
 function keyPressed(){
     
-    // console.log(keyCode)
+    console.log(keyCode)
     if(keyCode === 32){
         character.up();
         character.brain_power -= 25;
     }
-    if(keyCode === 13){
+    if(keyCode === 16){
        pauseGame()
     }
 }
 
 function startGame(){
-    // start_button = createButton('Start Game');
     start_button = createImg("images/play-64.png",'play')
-    start_button.position(300,265);
+    start_button.position(320,200);
     start_button.mousePressed(pressedStart);
 
 }
 function playAgain(){
-    restart_button = createButton('Play Again');
-    restart_button.position(250,265);
+    restart_button = createImg("images/play-64.png",'play')
+    restart_button.position(320,200);
     restart_button.mousePressed(reloadPage);
 }
 
 function saveScore(){
-    // save_button = createButton('Save Score');
-    // save_button.position(330,265);
-    // save_button.mousePressed(pressedSaveScore);
-
-    // let label = createP('Enter Name:');
-    // label.position(200,265);
-    // let input_field = createInput('');
-    // input_field.position(330,265);
+    let text = createP("Please enter name");
+    text.position(220, 265);
+    text.class("scoreName");
 
     input = createInput();
-    input.position(200, 265);
+    input.attribute('placeholder', 'Best Player');
+    input.position(260, 340);
   
     button = createButton('submit');
-    button.position(input.x + input.width, input.y);
+    button.position(input.x + input.width+10, input.y);
     button.mousePressed(scoreRecorded);
   
-    greeting = createElement('h2', 'what is your name?');
-    greeting.position(200, 205);
-  
-    textAlign(CENTER);
-    textSize(50);
+   
 }
+
 function scoreRecorded(){
     const name = input.value()
     adaptor.postScore(name, current_score)
-    .then(scoreArr => {
+   .then(scoreArr => {
+        scoresUl.innerHTML = ''
         scoreArr.forEach(scoreObj => {
            let scoreLi = document.createElement("li")
            scoreLi.className = "scoreLi"
@@ -129,6 +127,7 @@ function scoreRecorded(){
     })
     
 }
+
 function scoreList(){
 
     adaptor.getScores()
@@ -143,17 +142,46 @@ function scoreList(){
         });
     })
 
-    // debugger
 }
+
 function pressedStart(){
     start_button.remove();
-    song.play()
-    //  let timerText = createP(timer);
-    // timerText.position(width/2,height/2);
-    
-    loop();
-
+    countdown(6);
 }
+
+function countdown(mySeconds) {
+    var seconds = mySeconds;
+    timerText = createElement('p').addClass('timer');
+    
+
+    function tick() {
+        ding.play();
+        //This script expects an element with an ID = "counter". You can change that to what ever you want. 
+        const timer = document.getElementById("timer");
+        timer.className = "timer"
+        const timer_instruction = document.getElementById('timer-instruction');
+        timer_instruction.className = 'timer_inst blinking'
+        timer_instruction.innerText = 'Be Ready to Press Space Bar'
+
+        --seconds;
+        timer.innerText = String(seconds);
+    
+        if( seconds > 0 ) {
+            setTimeout(tick, 1000);
+            
+        } else{
+            if(seconds === 0){
+                timer.remove();
+                timer_instruction.remove();
+                song.play();
+                loop();
+            }
+        }
+    }
+    tick();
+}
+
+
 
 function pressedSaveScore(){
     save_button.remove();
@@ -163,7 +191,7 @@ function gameOver(){
     song.pause()
     noLoop();
     let text = createP("Game Over!");
-    text.position(200, 100);
+    text.position(160,30);
     text.class("gameOver");
     playAgain();
     saveScore();
@@ -193,17 +221,19 @@ function reloadPage(){
 }
 
 function drawScore(){
-    let c = color('#F50834');
+    let c = color('#000000FF');
     let fontsize = 20;
     fill(c);
     textSize(fontsize);
-    current_score = frameCount/2;
+    textFont(fontRegular)
+    current_score = frameCount/6;
     if(current_score >= 500 && current_score < 700){
         level = 2;
     }else if(current_score >= 700 && current_score < 1000){
         level = 3;
     }
     text(`BRAIN POWER: ${character.brain_power}`, 10, 25)
+    textStyle('font-family: monospace;')
     text(`SCORE: ${parseInt(current_score)}`,300,25)
     text(`LEVEL: ${level}`,550,25)
 
