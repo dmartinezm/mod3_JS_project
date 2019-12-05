@@ -1,9 +1,43 @@
 .gameOver {
 	font-family: monospace;
-	background-color: #FF0000;
-	color: #FFFFFF;
-	font-size: 30pt;
+	/* background-color: #FF0000; */
+	color: #f30707;
+	font-size: 50pt;
     padding: 10px;
+}
+.scoreName{
+	font-family: monospace;
+	color: rgba(0, 0, 0, 0.911);
+	font-size: 20pt;
+}
+.timer{
+	font-family: monospace;
+	color: rgba(33, 18, 241, 0.911);
+	font-size: 80pt;
+	position: absolute;
+    left: 320px;
+	top: 70px;
+	
+}
+
+
+.timer_inst{
+	font-family: monospace;
+	color: rgba(33, 18, 241, 0.911);
+	font-size: 20pt;
+	position: absolute;
+    left: 150px;
+	top: 130px;
+	
+}
+.blinking{
+    animation:blinkingText 1.0s infinite;
+}
+@keyframes blinkingText{
+	0%{     color: rgba(33, 18, 241, 0.911); }
+    49%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #000;    }
 }
 
 h1 {
