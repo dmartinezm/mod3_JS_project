@@ -1,13 +1,13 @@
 class ScoresController < ApplicationController
 
-def index
-    render json: Score.all
-end
-
-def create
-    @score= Score.create(scores_params)
-    render json: Score.all
-end
+    def index
+        render json: Score.all.sort_by{|x| x[:score]}.reverse[0..9]
+    end
+    
+    def create
+        @score= Score.create(scores_params)
+        render json: Score.all.sort_by{|x| x[:score]}.reverse[0..9]
+    end
 
 private
 

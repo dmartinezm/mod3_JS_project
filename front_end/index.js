@@ -1,7 +1,7 @@
 let background_img;
 let character;
 let scoreListDiv = document.querySelector("#scorelist")
-let scoresUl = document.createElement("ul")
+let scoresOl = document.createElement("ol")
 let gems = [];
 let f_gems = [];
 let gameStarted = false;
@@ -19,6 +19,7 @@ let fontRegular;
 let song = new Audio("sounds/sonic.mp3")
 let ding = new Audio("sounds/ding2.wav")
 song.loop= true
+let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"]
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
@@ -93,8 +94,8 @@ function startGame(){
 
 }
 function playAgain(){
-    restart_button = createImg("images/play-64.png",'play')
-    restart_button.position(320,200);
+    restart_button = createButton('Play Again');
+    restart_button.position(300,465);
     restart_button.mousePressed(reloadPage);
 }
 
@@ -117,35 +118,38 @@ function saveScore(){
 function scoreRecorded(){
     const name = input.value()
     adaptor.postScore(name, current_score)
-   .then(scoreArr => {
-        scoresUl.innerHTML = ''
+    .then(scoreArr => {
+        scoreListDiv.innerHTML = ""
+        highScoresH2 = document.createElement("h2")
+        highScoresH2.innerText= "High Scores"
+        scoreListDiv.append(highScoresH2)
         scoreArr.forEach(scoreObj => {
            let scoreLi = document.createElement("li")
            scoreLi.className = "scoreLi"
-           scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
-           scoresUl.append(scoreLi)
-           scoreListDiv.append(scoresUl)
+           scoreLi.innerText =  `${scoreObj.player_name}: ${scoreObj.score}`
+           scoresOl.append(scoreLi)
+           scoreListDiv.append(scoresOl)
             
         });
     })
     
 }
 
-function scoreList(){
+// function scoreList(){
 
-    adaptor.getScores()
-    .then(scoreArr => {
-        scoreArr.forEach(scoreObj => {
-           let scoreLi = document.createElement("li")
-           scoreLi.className = "scoreLi"
-           scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
-           scoresUl.append(scoreLi)
-           scoreListDiv.append(scoresUl)
+//     adaptor.getScores()
+//     .then(scoreArr => {
+//         scoreArr.forEach(scoreObj => {
+//            let scoreLi = document.createElement("li")
+//            scoreLi.className = "scoreLi"
+//            scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
+//            scoresUl.append(scoreLi)
+//            scoreListDiv.append(scoresUl)
             
-        });
-    })
+//         });
+//     })
 
-}
+// }
 
 function pressedStart(){
     start_button.remove();
