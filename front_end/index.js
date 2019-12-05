@@ -4,6 +4,7 @@ let scoreListDiv = document.querySelector("#scorelist")
 let scoresUl = document.createElement("ul")
 let gems = [];
 let f_gems = [];
+let gameStarted = false;
 let paused = true;
 let paused_text;
 let gameOverStatus = false;
@@ -152,6 +153,8 @@ function pressedStart(){
 }
 
 function countdown(mySeconds) {
+    console.log(gameStarted)
+   
     var seconds = mySeconds;
     timerText = createElement('p').addClass('timer');
     
@@ -177,6 +180,7 @@ function countdown(mySeconds) {
             
         } else{
             if(seconds === 0){
+                gameStarted = true;
                 timer.remove();
                 game_instruction.remove();
                 pause_instruction.remove();
@@ -208,8 +212,8 @@ function gameOver(){
 
 function pauseGame(){
     // console.log(key)
-    
-    if(gameOverStatus === false){
+    console.log(gameStarted)
+    if(gameOverStatus === false && gameStarted === true){
         if(paused){
             paused = false;
             paused_text = createP("Paused");
