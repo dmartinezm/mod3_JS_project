@@ -1,7 +1,7 @@
 class Character {
 
     constructor(){
-        this.charcter_image = loadImage("images/sonic.png")
+        this.charcter_image = loadImage("images/bird.png")
         this.x = 64;
         this.y = height/3;
         this.w = 32;
@@ -15,7 +15,7 @@ class Character {
     }
 
     show = () => {
-        image(this.charcter_image,this.x,this.y, 45,45);
+        image(this.charcter_image,this.x,this.y, this.w,this.h);
     }
 
     up = () => {

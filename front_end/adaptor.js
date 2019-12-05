@@ -15,6 +15,19 @@ let postScore = (name,scoreNum) => {
   .then(resp => resp.json())
 }
 
+let getScores = () => {
+  const url = `http://localhost:3000/scores`
+  return fetch(url, {
+    method:'GET',
+   headers: { 
+       'Content-type': 'application/json',
+       'accept': 'application/json'
+   }
+  })
+  .then(resp => resp.json())
+  
+}
 const adaptor = {
-    postScore
+    postScore,
+    getScores
   }
