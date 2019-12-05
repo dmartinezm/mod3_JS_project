@@ -19,6 +19,7 @@ let fontRegular;
 let song = new Audio("sounds/sonic.mp3")
 let ding = new Audio("sounds/ding2.wav")
 song.loop= true
+let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"]
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
