@@ -4,6 +4,7 @@ let scoreListDiv = document.querySelector("#scorelist")
 let scoresOl = document.createElement("ol")
 let gems = [];
 let f_gems = [];
+let languageRate = 75
 let gameStarted = false;
 let paused = true;
 let paused_text;
@@ -23,11 +24,14 @@ let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
-
+    b2 = loadImage(imgs[2])
+    // imgs.forEach(imageitem => {
+    //     loadImage(imageitem)
+    // });
     fontRegular = loadFont('fonts/Regular.ttf');
   
     getAllLanguages();
-    scoreList();
+    // scoreList();
 }
 
 function setup(){
@@ -70,7 +74,7 @@ function drawGems(){
 }
 
 function frames(){
-    if (frameCount % 75 == 0) {
+    if (frameCount % languageRate == 0) {
         gems.push(new Language(f_gems[randomNumber()]))
       }
 }
@@ -245,13 +249,7 @@ function drawScore(){
     let fontsize = 20;
     fill(c);
     textSize(fontsize);
-    
-    current_score = frameCount/6;
-    if(current_score >= 500 && current_score < 700){
-        level = 2;
-    }else if(current_score >= 700 && current_score < 1000){
-        level = 3;
-    }
+    setScore()
     text(`BRAIN POWER: ${character.brain_power}`, 10, 25)
     text(`SCORE: ${parseInt(current_score)}`,300,25)
     text(`LEVEL: ${level}`,550,25)
@@ -274,3 +272,12 @@ let getAllLanguages = () => {
         // console.log(langArray);
     })
 } 
+
+let setScore = () => {
+    current_score = frameCount/6;
+    if(current_score % 300 == 0){
+        level++;
+        languageRate+=50
+        background(b2)
+    }
+}
