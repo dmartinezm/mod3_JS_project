@@ -94,8 +94,8 @@ function startGame(){
 
 }
 function playAgain(){
-    restart_button = createImg("images/play-64.png",'play')
-    restart_button.position(320,200);
+    restart_button = createButton('Play Again');
+    restart_button.position(300,465);
     restart_button.mousePressed(reloadPage);
 }
 
