@@ -1,7 +1,7 @@
 let background_img;
 let character;
 let scoreListDiv = document.querySelector("#scorelist")
-let scoresUl = document.createElement("ul")
+let scoresOl = document.createElement("ol")
 let gems = [];
 let f_gems = [];
 let gameStarted = false;
@@ -126,9 +126,9 @@ function scoreRecorded(){
         scoreArr.forEach(scoreObj => {
            let scoreLi = document.createElement("li")
            scoreLi.className = "scoreLi"
-           scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
-           scoresUl.append(scoreLi)
-           scoreListDiv.append(scoresUl)
+           scoreLi.innerText =  `${scoreObj.player_name}: ${scoreObj.score}`
+           scoresOl.append(scoreLi)
+           scoreListDiv.append(scoresOl)
             
         });
     })
