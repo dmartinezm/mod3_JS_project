@@ -213,7 +213,7 @@ function pauseGame(){
         if(paused){
             paused = false;
             paused_text = createP("Paused");
-            paused_text.position(160,30);
+            paused_text.position(200,30);
             paused_text.class("gameOver");
         
             song.pause()

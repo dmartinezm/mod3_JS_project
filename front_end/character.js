@@ -1,11 +1,11 @@
 class Character {
 
     constructor(){
-        this.charcter_image = loadImage("images/bird.png")
+        this.charcter_image = loadImage("images/sonic2.png")
         this.x = 64;
         this.y = 0;
-        this.w = 32;
-        this.h = 32;
+        this.w = 50;
+        this.h = 50;
         this.velocity = 0;
         this.gravity = 0.3;
         this.lift = -6;
