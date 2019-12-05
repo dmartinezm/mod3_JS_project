@@ -8,10 +8,11 @@ class Language{
         this.h = 32;
         this.speed = 3;
         this.lang_image = loadImage(langObject.image);
+        this.audio = new Audio ("sounds/ring.mp3")
     }
 
     show = () => {
-        image(this.lang_image, this.x, this.y)
+        this.langObject.name == "Spaghetti" ? image(this.lang_image, this.x, this.y, this.w*2.5, this.h*2.5) : image(this.lang_image, this.x, this.y)
     }
 
     update = () => {
@@ -32,6 +33,8 @@ class Language{
             if(character.x >= this.x && character.x <= this.x + this.w){
                 character.brain_power += this.langObject.value;
                 console.log(this.langObject.value)
+                this.audio.play()
+                
                 return true;
                 
             }

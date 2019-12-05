@@ -5,3 +5,17 @@
 	font-size: 30pt;
     padding: 10px;
 }
+
+h1 {
+	font-family: monospace;
+	font-size: 50pt;
+}
+
+body {
+	display: flex;
+}
+
+div#scoreList {
+	text-align: center;
+}
+
