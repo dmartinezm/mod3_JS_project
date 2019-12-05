@@ -21,13 +21,22 @@
 }
 
 
-.timer_inst{
+.game_inst{
 	font-family: monospace;
 	color: rgba(33, 18, 241, 0.911);
 	font-size: 20pt;
 	position: absolute;
     left: 150px;
 	top: 130px;
+	
+}
+.pause_inst{
+	font-family: monospace;
+	color: rgba(33, 18, 241, 0.911);
+	font-size: 20pt;
+	position: absolute;
+    left: 150px;
+	top: 330px;
 	
 }
 .blinking{
