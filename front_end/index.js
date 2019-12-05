@@ -20,11 +20,18 @@ let fontRegular;
 let song = new Audio("sounds/sonic.mp3")
 let ding = new Audio("sounds/ding2.wav")
 song.loop= true
-let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"]
+let imgs = ["images/forest_background.png", "images/backg.jpeg", "images/bkg2.jpg", "images/bkg3.png", "images/bkg4.png"]
+let bgs
+
+
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
     b2 = loadImage(imgs[2])
+    b3 = loadImage(imgs[3])
+    b4 = loadImage(imgs[4])
+    b5= loadImage(imgs[1])
+    bgs = [background_img, b2, b3,b4, b5]
     // imgs.forEach(imageitem => {
     //     loadImage(imageitem)
     // });
@@ -278,6 +285,10 @@ let setScore = () => {
     if(current_score % 300 == 0){
         level++;
         languageRate+=50
-        background(b2)
+        background_img = bgs[randomBG()]
     }
+}
+
+let randomBG = () => {
+    return Math.floor(Math.random() * 6);
 }
