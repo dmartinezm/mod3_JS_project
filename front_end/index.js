@@ -5,6 +5,8 @@ let scoresUl = document.createElement("ul")
 let gems = [];
 let f_gems = [];
 let paused = true;
+let paused_text;
+let gameOverStatus = false;
 let level = 1;
 let start_button;
 let save_button;
@@ -37,8 +39,8 @@ function setup(){
 }
 
 function draw(){
+    
     background(background_img);
-    text("Press Enter to Pause", 500, 500);
    
     drawScore();
     frames();
@@ -73,7 +75,7 @@ function frames(){
 
 function keyPressed(){
     
-    console.log(keyCode)
+    // console.log(keyCode)
     if(keyCode === 32){
         character.up();
         character.brain_power -= 25;
@@ -159,9 +161,13 @@ function countdown(mySeconds) {
         //This script expects an element with an ID = "counter". You can change that to what ever you want. 
         const timer = document.getElementById("timer");
         timer.className = "timer"
-        const timer_instruction = document.getElementById('timer-instruction');
-        timer_instruction.className = 'timer_inst blinking'
-        timer_instruction.innerText = 'Be Ready to Press Space Bar'
+        const game_instruction = document.getElementById('game-instruction');
+        game_instruction.className = 'game_inst blinking'
+        game_instruction.innerText = 'Be Ready to Press Space Bar'
+
+        const pause_instruction = document.getElementById('pause-instruction');
+        pause_instruction.className = 'pause_inst'
+        pause_instruction.innerText = 'Press Shift to Pause'
 
         --seconds;
         timer.innerText = String(seconds);
@@ -172,7 +178,8 @@ function countdown(mySeconds) {
         } else{
             if(seconds === 0){
                 timer.remove();
-                timer_instruction.remove();
+                game_instruction.remove();
+                pause_instruction.remove();
                 song.play();
                 loop();
             }
@@ -188,7 +195,8 @@ function pressedSaveScore(){
 }
 
 function gameOver(){
-    song.pause()
+    gameOverStatus = true;
+    song.pause();
     noLoop();
     let text = createP("Game Over!");
     text.position(160,30);
@@ -199,20 +207,24 @@ function gameOver(){
 }
 
 function pauseGame(){
-    console.log(key)
-    let pause_text;
-    if(paused){
-        paused = false;
-        // pause_text = createP("Paused");
-        // pause_text.position(300, 100);
-        // pause_text.class("gameOver");
-        song.pause()
-        noLoop();
-    }
-    else{
-        paused = true;
-        song.play()
-        loop();
+    // console.log(key)
+    
+    if(gameOverStatus === false){
+        if(paused){
+            paused = false;
+            paused_text = createP("Paused");
+            paused_text.position(160,30);
+            paused_text.class("gameOver");
+        
+            song.pause()
+            noLoop();
+        }
+        else{
+            paused_text.remove();
+            paused = true;
+            song.play()
+            loop();
+        }
     }
 }
 
@@ -225,7 +237,7 @@ function drawScore(){
     let fontsize = 20;
     fill(c);
     textSize(fontsize);
-    textFont(fontRegular)
+    
     current_score = frameCount/6;
     if(current_score >= 500 && current_score < 700){
         level = 2;
@@ -233,7 +245,6 @@ function drawScore(){
         level = 3;
     }
     text(`BRAIN POWER: ${character.brain_power}`, 10, 25)
-    textStyle('font-family: monospace;')
     text(`SCORE: ${parseInt(current_score)}`,300,25)
     text(`LEVEL: ${level}`,550,25)
 
