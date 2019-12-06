@@ -10,6 +10,11 @@ let paused = true;
 let paused_text;
 let gameOverStatus = false;
 let level = 1;
+let level_text;
+let gameOver_text;
+let scoreName;
+let scoreButton;
+let scoreLabel;
 let start_button;
 let save_button;
 let end_button;
@@ -20,18 +25,9 @@ let fontRegular;
 let song = new Audio("sounds/sonic.mp3");
 let ding = new Audio("sounds/ding2.wav");
 song.loop= true;
-let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"];
 let canvas_div_info = document.getElementById('canvasDiv').getBoundingClientRect();
-
-// function preload(){
-//     background_img = loadImage("images/forest_background.png");
-// =======
-// let song = new Audio("sounds/sonic.mp3")
-// let ding = new Audio("sounds/ding2.wav")
-// song.loop= true
-// let imgs = ["images/forest_background.png", "images/backg.jpeg", "images/bkg2.jpg", "images/bkg3.png", "images/bkg4.png"]
-// let bgs
-
+let imgs = ["images/forest_background.png", "images/backg.jpeg", "images/bkg2.jpg", "images/bkg3.png", "images/bkg4.png"]
+let bgs;
 
 
 function preload(){
@@ -46,14 +42,15 @@ function preload(){
     // });
 
     fontRegular = loadFont('fonts/Regular.ttf');
-    console.log(canvas_div_info);
+ 
     getAllLanguages();
-    // scoreList();
+    scoreList();
 }
 
 function setup(){
-    // let canvas = createCanvas(700,530);
+     // let canvas = createCanvas(700,530);
     let canvas = createCanvas(canvas_div_info.width,canvas_div_info.height);
+
     canvas.parent('canvasDiv')
     canvas.class('item2')
     character = new Character;
@@ -83,7 +80,7 @@ function drawGems(){
         language.update();
 
         if(language.hits(character)){
-            // console.log('hit')
+            console.log('hit')
             gems.splice(0,1);
         }
         if(language.offscreen()){
@@ -118,35 +115,40 @@ function startGame(){
 
 }
 function playAgain(){
-    restart_button = createButton('Play Again');
-    restart_button.position(300,465);
+    // restart_button = createButton('Play Again');
+    restart_button = createImg("images/reload.png",'reload')
+    // restart_button.size(32,32)
+    restart_button.position(320,200);
     restart_button.mousePressed(reloadPage);
 }
 
-function saveScore(){
-    let text = createP("Please enter name");
-    text.position(220, 265);
-    text.class("scoreName");
 
-    input = createInput();
-    input.attribute('placeholder', 'Best Player');
-    input.position(260, 340);
+
+function saveScore(){
+    scoreLabel = createP("Please enter name");
+    scoreLabel.position(220, 265);
+    scoreLabel.class("scoreName");
+
+    scoreName = createInput();
+    scoreName.attribute('placeholder', 'Best Player');
+    scoreName.position(260, 340);
   
-    button = createButton('submit');
-    button.position(input.x + input.width+10, input.y);
-    button.mousePressed(scoreRecorded);
+    scoreButton = createButton('submit');
+    scoreButton.position(scoreName.x + scoreName.width+10, scoreName.y);
+    scoreButton.mousePressed(scoreRecorded);
   
    
 }
 
 function scoreRecorded(){
-    const name = input.value()
+    const name = scoreName.value()
     adaptor.postScore(name, current_score)
     .then(scoreArr => {
-        scoreListDiv.innerHTML = ""
-        highScoresH2 = document.createElement("h2")
-        highScoresH2.innerText= "High Scores"
-        scoreListDiv.append(highScoresH2)
+        console.log(scoreListDiv)
+        scoresOl.innerHTML = ""
+        // highScoresH2 = document.createElement("h2")
+        // highScoresH2.innerText= "High Scores"
+        // scoreListDiv.append(highScoresH2)
         scoreArr.forEach(scoreObj => {
            let scoreLi = document.createElement("li")
            scoreLi.className = "scoreLi"
@@ -155,25 +157,32 @@ function scoreRecorded(){
            scoreListDiv.append(scoresOl)
             
         });
+        scoreLabel.remove();
+        scoreButton.remove();
+        scoreName.remove(); 
+        gameOver_text.remove();
     })
     
 }
 
-// function scoreList(){
+function scoreList(){
 
-//     adaptor.getScores()
-//     .then(scoreArr => {
-//         scoreArr.forEach(scoreObj => {
-//            let scoreLi = document.createElement("li")
-//            scoreLi.className = "scoreLi"
-//            scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
-//            scoresUl.append(scoreLi)
-//            scoreListDiv.append(scoresUl)
+    adaptor.getScores()
+    .then(scoreArr => {
+        highScoresH2 = document.createElement("h2")
+        highScoresH2.innerText= "High Scores"
+        scoreListDiv.append(highScoresH2)
+        scoreArr.forEach(scoreObj => {
+           let scoreLi = document.createElement("li")
+           scoreLi.className = "scoreLi"
+           scoreLi.innerText = `${scoreObj.player_name}: ${scoreObj.score}`
+           scoresOl.append(scoreLi)
+           scoreListDiv.append(scoresOl)
             
-//         });
-//     })
+        });
+    })
 
-// }
+}
 
 function pressedStart(){
     start_button.remove();
@@ -220,19 +229,13 @@ function countdown(mySeconds) {
     tick();
 }
 
-
-
-function pressedSaveScore(){
-    save_button.remove();
-}
-
 function gameOver(){
     gameOverStatus = true;
     song.pause();
     noLoop();
-    let text = createP("Game Over!");
-    text.position(160,30);
-    text.class("gameOver");
+    gameOver_text= createP("Game Over!");
+    gameOver_text.position(160,30);
+    gameOver_text.class("gameOver");
     playAgain();
     saveScore();
     
@@ -289,19 +292,29 @@ let getAllLanguages = () => {
     .then(resp => resp.json())
     .then(langArray => {
         f_gems = langArray
-        // console.log(langArray);
     })
 } 
+
+let drawLevel = (level) => {
+    level_text = createP(`Level ${level}`);
+    level_text.position(200,60);
+    level_text.class("gameOver");
+    setTimeout(function () {
+        level_text.remove();
+    }, 1000);
+    
+}
 
 let setScore = () => {
     current_score = frameCount/6;
     if(current_score % 300 == 0){
         level++;
+        drawLevel(level)
         languageRate+=50
         background_img = bgs[randomBG()]
     }
 }
 
 let randomBG = () => {
-    return Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 5) ;
 }

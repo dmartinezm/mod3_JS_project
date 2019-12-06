@@ -49,15 +49,6 @@
     100%{   color: #000;    }
 }
 
-/* h1 {
-	font-family: monospace;
-	font-size: 50pt;
-} */
-
-/* body {
-	display: flex;
-} */
-
 div#scoreList {
 	text-align: center;
 }
