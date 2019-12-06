@@ -31,8 +31,9 @@ class Language{
     }
     
     hits = (character) => {
+
         if(this.y <= character.y + character.h && this.y + this.h >= character.y ){
-            if(character.x >= this.x && character.x <= this.x + this.w){
+            if(character.x + character.w >= this.x && character.x <= this.x + this.w){
                 character.brain_power += this.langObject.value;
                 console.log(this.langObject.value)
                 if(this.langObject.name == "Spaghetti"){
@@ -41,13 +42,10 @@ class Language{
                     this.audio.play()
                 }
                 
-                
-                return true;
-                
+        return true;
             }
         }
         else{
-            // console.log(this.y, player.y)
             return false;
         }
     }
