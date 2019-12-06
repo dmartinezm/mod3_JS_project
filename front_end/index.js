@@ -4,6 +4,7 @@ let scoreListDiv = document.querySelector("#scorelist");
 let scoresOl = document.createElement("ol");
 let gems = [];
 let f_gems = [];
+let languageRate = 75
 let gameStarted = false;
 let paused = true;
 let paused_text;
@@ -15,14 +16,35 @@ let end_button;
 let restart_button;
 let current_score = 0;
 let fontRegular;
+
 let song = new Audio("sounds/sonic.mp3");
 let ding = new Audio("sounds/ding2.wav");
 song.loop= true;
 let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"];
 let canvas_div_info = document.getElementById('canvasDiv').getBoundingClientRect();
 
+// function preload(){
+//     background_img = loadImage("images/forest_background.png");
+// =======
+// let song = new Audio("sounds/sonic.mp3")
+// let ding = new Audio("sounds/ding2.wav")
+// song.loop= true
+// let imgs = ["images/forest_background.png", "images/backg.jpeg", "images/bkg2.jpg", "images/bkg3.png", "images/bkg4.png"]
+// let bgs
+
+
+
 function preload(){
     background_img = loadImage("images/forest_background.png");
+    b2 = loadImage(imgs[2])
+    b3 = loadImage(imgs[3])
+    b4 = loadImage(imgs[4])
+    b5= loadImage(imgs[1])
+    bgs = [background_img, b2, b3,b4, b5]
+    // imgs.forEach(imageitem => {
+    //     loadImage(imageitem)
+    // });
+
     fontRegular = loadFont('fonts/Regular.ttf');
     console.log(canvas_div_info);
     getAllLanguages();
@@ -72,7 +94,7 @@ function drawGems(){
 }
 
 function frames(){
-    if (frameCount % 75 == 0) {
+    if (frameCount % languageRate == 0) {
         gems.push(new Language(f_gems[randomNumber()]))
       }
 }
@@ -247,13 +269,7 @@ function drawScore(){
     let fontsize = 20;
     fill(c);
     textSize(fontsize);
-    
-    current_score = frameCount/6;
-    if(current_score >= 500 && current_score < 700){
-        level = 2;
-    }else if(current_score >= 700 && current_score < 1000){
-        level = 3;
-    }
+    setScore()
     text(`BRAIN POWER: ${character.brain_power}`, 10, 25)
     text(`SCORE: ${parseInt(current_score)}`,300,25)
     text(`LEVEL: ${level}`,550,25)
@@ -276,3 +292,16 @@ let getAllLanguages = () => {
         // console.log(langArray);
     })
 } 
+
+let setScore = () => {
+    current_score = frameCount/6;
+    if(current_score % 300 == 0){
+        level++;
+        languageRate+=50
+        background_img = bgs[randomBG()]
+    }
+}
+
+let randomBG = () => {
+    return Math.floor(Math.random() * 6);
+}
