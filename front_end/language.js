@@ -37,11 +37,29 @@ class Language{
                 character.brain_power += this.langObject.value;
                 console.log(this.langObject.value)
                 if(this.langObject.name == "Spaghetti"){
+                    character.character_image = loadImage("images/meatball.png");
+                    character.w*=1.5
+                    character.h*=1.5
                     this.audio_no.play()
+                    setTimeout(function () {
+                        character.character_image = loadImage("images/brains.png");
+                        character.w/=1.5
+                        character.h/=1.5
+                    }, 300);
                 }else{
+                   
+                    character.character_image = loadImage("images/brain_light.png");
+                    character.w*=1.5
+                    character.h*=1.5
                     this.audio.play()
+                    setTimeout(function () {
+                        character.character_image = loadImage("images/brains.png");
+                        character.w/=1.5
+                        character.h/=1.5
+                    }, 150);
                 }
                 
+               
         return true;
             }
         }
