@@ -1,7 +1,7 @@
 let background_img;
 let character;
-let scoreListDiv = document.querySelector("#scorelist")
-let scoresOl = document.createElement("ol")
+let scoreListDiv = document.querySelector("#scorelist");
+let scoresOl = document.createElement("ol");
 let gems = [];
 let f_gems = [];
 let gameStarted = false;
@@ -14,25 +14,26 @@ let save_button;
 let end_button;
 let restart_button;
 let current_score = 0;
-let myCanvas;
 let fontRegular;
-let song = new Audio("sounds/sonic.mp3")
-let ding = new Audio("sounds/ding2.wav")
-song.loop= true
-let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"]
+let song = new Audio("sounds/sonic.mp3");
+let ding = new Audio("sounds/ding2.wav");
+song.loop= true;
+let imgs = ["images/forest_background.png", "images/backg.png", "images/bkg2.jpg", "images/bkg3.jpg", "images/bkg4.jpg"];
+let canvas_div_info = document.getElementById('canvasDiv').getBoundingClientRect();
 
 function preload(){
     background_img = loadImage("images/forest_background.png");
-
     fontRegular = loadFont('fonts/Regular.ttf');
-  
+    console.log(canvas_div_info);
     getAllLanguages();
-    scoreList();
+    // scoreList();
 }
 
 function setup(){
-    myCanvas = createCanvas(700,530);
-    myCanvas.parent('canvasDiv')
+    // let canvas = createCanvas(700,530);
+    let canvas = createCanvas(canvas_div_info.width,canvas_div_info.height);
+    canvas.parent('canvasDiv')
+    canvas.class('item2')
     character = new Character;
     textSize(20);
     noLoop();
@@ -52,6 +53,7 @@ function draw(){
     character.update();
     
 }
+
 
 function drawGems(){
     gems.forEach((language) => {
