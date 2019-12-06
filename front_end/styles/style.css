@@ -49,9 +49,25 @@
     100%{   color: #000;    }
 }
 
-div#scoreList {
-	text-align: center;
+#scorelist {
+	background-color: greenyellow;
+	text-align: justify;
+	font-weight: bolder;
+	font-size: larger;
 }
 
+*{
+	font-family: 'Josefin Sans', sans-serif;
+}
 
+div#header {
+	text-align: center;
+	font-weight: bolder;
+	font-size: x-large;
+	background-color: greenyellow;
+	letter-spacing: .5rem;
+}
 
+#scorelist h2 {
+	font-size: xx-large;
+}
