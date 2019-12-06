@@ -9,7 +9,7 @@ class Character {
         this.velocity = 0;
         this.gravity = 0.3;
         this.lift = -6;
-        this.soil_h = 130;
+        this.soil_h = 100;
         this.brain_power = 1000;
         this.score = 0;
     }
